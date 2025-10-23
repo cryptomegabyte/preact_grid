@@ -11,6 +11,7 @@
   overflow: hidden;
   background-color: #1a1a1a;
   color: #fff;
+  width: 100%;
 }
 
 .header {
@@ -23,6 +24,7 @@
 .header .cell {
   flex: 1;
   text-align: center;
+  min-width: 80px;
 }
 
 .rows {
@@ -45,6 +47,8 @@
   flex: 1;
   text-align: center;
   padding: 0 5px;
+  min-width: 80px;
+  word-wrap: break-word;
 }
 
 .symbol {
@@ -83,4 +87,86 @@
 h1 {
   color: #fff;
   margin-bottom: 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  #app {
+    padding: 1rem;
+  }
+
+  .data-grid {
+    font-size: 14px;
+  }
+
+  .header .cell,
+  .cell {
+    min-width: 70px;
+    padding: 0 3px;
+  }
+}
+
+@media (max-width: 768px) {
+  #app {
+    padding: 0.5rem;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+  }
+
+  .data-grid {
+    font-size: 12px;
+  }
+
+  .header .cell,
+  .cell {
+    min-width: 60px;
+    padding: 0 2px;
+  }
+
+  /* Hide market cap column on tablets */
+  .header .cell.market-cap,
+  .cell.market-cap {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  #app {
+    padding: 0.25rem;
+  }
+
+  h1 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
+  .data-grid {
+    font-size: 11px;
+    overflow-x: auto;
+  }
+
+  .header,
+  .row {
+    min-width: 600px; /* Ensure minimum width for scrolling */
+  }
+
+  .header .cell,
+  .cell {
+    min-width: 50px;
+    padding: 0 1px;
+  }
+
+  /* Hide volume column on mobile */
+  .header .cell.volume,
+  .cell.volume {
+    display: none;
+  }
+
+  .rows {
+    max-height: 400px;
+  }
 }
