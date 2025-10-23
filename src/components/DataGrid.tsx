@@ -6,15 +6,18 @@ interface DataGridProps {
 
 const Row = ({ item }: { item: StockData }) => {
   const isPositive = item.change >= 0;
+  const arrow = isPositive ? '▲' : '▼';
 
   return (
     <div className="row">
       <div className="cell symbol">{item.symbol}</div>
       <div className="cell price">${item.price.toFixed(2)}</div>
       <div className={`cell change ${isPositive ? 'positive' : 'negative'}`}>
+        <span className="arrow">{arrow}</span>
         {isPositive ? '+' : ''}{item.change.toFixed(2)}
       </div>
       <div className={`cell change-percent ${isPositive ? 'positive' : 'negative'}`}>
+        <span className="arrow">{arrow}</span>
         ({isPositive ? '+' : ''}{item.changePercent.toFixed(2)}%)
       </div>
       <div className="cell volume">{item.volume.toLocaleString()}</div>

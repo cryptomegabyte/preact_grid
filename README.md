@@ -10,6 +10,7 @@ A high-throughput financial data grid built with Preact, designed for displaying
 - **Professional Styling**: Modern dark theme with gradient backgrounds and glowing effects
 - **Responsive Design**: Adapts to different screen sizes with progressive column hiding
 - **Smooth Animations**: Subtle hover effects and loading animations
+- **Visual Indicators**: Up/down arrows (▲▼) for price change direction
 - **Custom Scrollbars**: Styled scrollbars for better UX
 
 ## Getting Started
