@@ -2,6 +2,8 @@
 
 A high-throughput financial data grid built with Preact, designed for displaying large datasets with real-time updates, similar to those used in hedge funds and trading platforms.
 
+![](./data_grid.png)
+
 ## Features
 
 - **High Performance**: Built with Preact for fast rendering
