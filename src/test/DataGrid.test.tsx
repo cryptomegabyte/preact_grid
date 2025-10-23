@@ -49,9 +49,10 @@ describe('DataGrid', () => {
     }];
     render(<DataGrid data={mockData} />);
 
-    // Check for positive change styling
-    const changeElement = screen.getByText('+5.00');
-    expect(changeElement).toHaveClass('positive');
+    // Check for positive change styling - find the change cell
+    const changeCell = document.querySelector('.change.positive');
+    expect(changeCell).toBeInTheDocument();
+    expect(changeCell?.textContent).toBe('▲+5.00');
   });
 
   it('should apply correct CSS classes for negative changes', () => {
@@ -65,9 +66,10 @@ describe('DataGrid', () => {
     }];
     render(<DataGrid data={mockData} />);
 
-    // Check for negative change styling
-    const changeElement = screen.getByText('-3.00');
-    expect(changeElement).toHaveClass('negative');
+    // Check for negative change styling - find the change cell
+    const changeCell = document.querySelector('.change.negative');
+    expect(changeCell).toBeInTheDocument();
+    expect(changeCell?.textContent).toBe('▼-3.00');
   });
 
   it('should format volume with commas', () => {
@@ -107,5 +109,64 @@ describe('DataGrid', () => {
     // No rows should be present
     const rows = document.querySelectorAll('.row');
     expect(rows).toHaveLength(0);
+  });
+
+  it('should display up arrows for positive changes', () => {
+    const mockData = [{
+      symbol: 'TEST',
+      price: 100,
+      change: 5,
+      changePercent: 5,
+      volume: 1000000,
+      marketCap: 100000000
+    }];
+    render(<DataGrid data={mockData} />);
+
+    // Check for up arrows in both change columns
+    const changeCell = document.querySelector('.change.positive');
+    const changePercentCell = document.querySelector('.change-percent.positive');
+
+    expect(changeCell?.textContent).toBe('▲+5.00');
+    expect(changePercentCell?.textContent).toBe('▲(+5.00%)');
+  });
+
+  it('should display down arrows for negative changes', () => {
+    const mockData = [{
+      symbol: 'TEST',
+      price: 100,
+      change: -3,
+      changePercent: -3,
+      volume: 1000000,
+      marketCap: 100000000
+    }];
+    render(<DataGrid data={mockData} />);
+
+    // Check for down arrows in both change columns
+    const changeCell = document.querySelector('.change.negative');
+    const changePercentCell = document.querySelector('.change-percent.negative');
+
+    expect(changeCell?.textContent).toBe('▼-3.00');
+    expect(changePercentCell?.textContent).toBe('▼(-3.00%)');
+  });
+
+  it('should style arrows with correct classes', () => {
+    const mockData = [{
+      symbol: 'TEST',
+      price: 100,
+      change: 5,
+      changePercent: 5,
+      volume: 1000000,
+      marketCap: 100000000
+    }];
+    render(<DataGrid data={mockData} />);
+
+    // Check that arrows have the arrow class
+    const arrows = document.querySelectorAll('.arrow');
+    expect(arrows).toHaveLength(2); // One for change, one for change-percent
+
+    arrows.forEach(arrow => {
+      expect(arrow).toHaveClass('arrow');
+      expect(arrow.textContent).toBe('▲');
+    });
   });
 });
