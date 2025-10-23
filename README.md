@@ -7,9 +7,10 @@ A high-throughput financial data grid built with Preact, designed for displaying
 - **High Performance**: Built with Preact for fast rendering
 - **Real-time Updates**: Simulated live data updates every second
 - **Large Dataset Support**: Handles 1000+ rows efficiently
-- **Professional Styling**: Dark theme with color-coded changes
-- **Scrollable Grid**: Smooth scrolling through data
+- **Professional Styling**: Modern dark theme with gradient backgrounds and glowing effects
 - **Responsive Design**: Adapts to different screen sizes with progressive column hiding
+- **Smooth Animations**: Subtle hover effects and loading animations
+- **Custom Scrollbars**: Styled scrollbars for better UX
 
 ## Getting Started
 
@@ -76,12 +77,12 @@ The data grid is fully responsive and adapts to different screen sizes:
 
 ## Technologies Used
 
-- **Preact**: Lightweight React alternative
+- **Preact**: Lightweight React alternative for high performance
 - **Vite**: Fast build tool and dev server
-- **TypeScript**: Type safety
+- **TypeScript**: Type safety and better developer experience
 - **Vitest**: Fast unit testing framework
 - **Testing Library**: Component testing utilities
-- **CSS**: Custom styling for professional look
+- **CSS**: Modern styling with gradients, animations, and responsive design
 
 ## Future Enhancements
 
