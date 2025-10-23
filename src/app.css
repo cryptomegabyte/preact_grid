@@ -1,0 +1,86 @@
+#app {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: 'Courier New', monospace;
+}
+
+.data-grid {
+  border: 1px solid #333;
+  border-radius: 4px;
+  overflow: hidden;
+  background-color: #1a1a1a;
+  color: #fff;
+}
+
+.header {
+  display: flex;
+  background-color: #333;
+  font-weight: bold;
+  padding: 10px 0;
+}
+
+.header .cell {
+  flex: 1;
+  text-align: center;
+}
+
+.rows {
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.row {
+  display: flex;
+  padding: 8px 0;
+  border-bottom: 1px solid #444;
+  transition: background-color 0.2s;
+}
+
+.row:hover {
+  background-color: #2a2a2a;
+}
+
+.cell {
+  flex: 1;
+  text-align: center;
+  padding: 0 5px;
+}
+
+.symbol {
+  font-weight: bold;
+  color: #4fc3f7;
+}
+
+.price {
+  color: #fff;
+}
+
+.change.positive {
+  color: #4caf50;
+}
+
+.change.negative {
+  color: #f44336;
+}
+
+.change-percent.positive {
+  color: #4caf50;
+}
+
+.change-percent.negative {
+  color: #f44336;
+}
+
+.volume {
+  color: #ff9800;
+}
+
+.market-cap {
+  color: #9c27b0;
+}
+
+h1 {
+  color: #fff;
+  margin-bottom: 20px;
+}
