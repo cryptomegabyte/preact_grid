@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/preact';
+import { render, screen, fireEvent } from '@testing-library/preact';
 import { DataGrid } from '../components/DataGrid';
 import { generateMockData } from '../types';
 
@@ -168,5 +168,130 @@ describe('DataGrid', () => {
       expect(arrow).toHaveClass('arrow');
       expect(arrow.textContent).toBe('▲');
     });
+  });
+
+  it('should render search input and stats', () => {
+    const mockData = generateMockData(3);
+    render(<DataGrid data={mockData} />);
+
+    // Check for search input
+    const searchInput = screen.getByPlaceholderText('Search by symbol...');
+    expect(searchInput).toBeInTheDocument();
+
+    // Check for stats display
+    expect(screen.getByText('Showing 3 of 3 stocks')).toBeInTheDocument();
+  });
+
+  it('should filter data based on search term', () => {
+    const mockData = [
+      { symbol: 'AAPL', price: 150, change: 5, changePercent: 3.33, volume: 1000000, marketCap: 2500000000000 },
+      { symbol: 'GOOGL', price: 2800, change: -10, changePercent: -0.35, volume: 500000, marketCap: 1800000000000 },
+      { symbol: 'MSFT', price: 300, change: 2, changePercent: 0.67, volume: 800000, marketCap: 2200000000000 }
+    ];
+    render(<DataGrid data={mockData} />);
+
+    const searchInput = screen.getByPlaceholderText('Search by symbol...');
+
+    // Filter for AAPL
+    fireEvent.change(searchInput, { target: { value: 'AAPL' } });
+
+    expect(screen.getByText('AAPL')).toBeInTheDocument();
+    expect(screen.queryByText('GOOGL')).not.toBeInTheDocument();
+    expect(screen.queryByText('MSFT')).not.toBeInTheDocument();
+    expect(screen.getByText('Showing 1 of 3 stocks')).toBeInTheDocument();
+  });
+
+  it('should sort data when clicking column headers', () => {
+    const mockData = [
+      { symbol: 'AAPL', price: 150, change: 5, changePercent: 3.33, volume: 1000000, marketCap: 2500000000000 },
+      { symbol: 'GOOGL', price: 2800, change: -10, changePercent: -0.35, volume: 500000, marketCap: 1800000000000 },
+      { symbol: 'MSFT', price: 300, change: 2, changePercent: 0.67, volume: 800000, marketCap: 2200000000000 }
+    ];
+    render(<DataGrid data={mockData} />);
+
+    // Click symbol header to sort ascending
+    const symbolHeader = screen.getByText('Symbol');
+    fireEvent.click(symbolHeader);
+
+    // Check that first row is AAPL (alphabetical order)
+    const rows = document.querySelectorAll('.row');
+    expect(rows[0].textContent).toContain('AAPL');
+    expect(rows[1].textContent).toContain('GOOGL');
+    expect(rows[2].textContent).toContain('MSFT');
+  });
+
+  it('should toggle sort direction on repeated clicks', () => {
+    const mockData = [
+      { symbol: 'AAPL', price: 150, change: 5, changePercent: 3.33, volume: 1000000, marketCap: 2500000000000 },
+      { symbol: 'GOOGL', price: 2800, change: -10, changePercent: -0.35, volume: 500000, marketCap: 1800000000000 },
+      { symbol: 'MSFT', price: 300, change: 2, changePercent: 0.67, volume: 800000, marketCap: 2200000000000 }
+    ];
+    render(<DataGrid data={mockData} />);
+
+    const symbolHeader = screen.getByText('Symbol');
+
+    // First click - ascending
+    fireEvent.click(symbolHeader);
+    let rows = document.querySelectorAll('.row');
+    expect(rows[0].textContent).toContain('AAPL');
+
+    // Second click - descending
+    fireEvent.click(symbolHeader);
+    rows = document.querySelectorAll('.row');
+    expect(rows[0].textContent).toContain('MSFT');
+  });
+
+  it('should handle row selection', () => {
+    const mockData = generateMockData(3);
+    render(<DataGrid data={mockData} />);
+
+    // Find checkboxes in rows
+    const checkboxes = document.querySelectorAll('.row input[type="checkbox"]');
+    expect(checkboxes).toHaveLength(3);
+
+    // Select first row
+    fireEvent.click(checkboxes[0]);
+    expect(checkboxes[0]).toBeChecked();
+
+    // Check stats show selection
+    expect(screen.getByText('Showing 3 of 3 stocks • 1 selected')).toBeInTheDocument();
+  });
+
+  it('should handle select all functionality', () => {
+    const mockData = generateMockData(3);
+    render(<DataGrid data={mockData} />);
+
+    // Find header checkbox
+    const headerCheckbox = document.querySelector('.header input[type="checkbox"]') as HTMLInputElement;
+
+    // Select all
+    fireEvent.click(headerCheckbox);
+    const rowCheckboxes = document.querySelectorAll('.row input[type="checkbox"]');
+    rowCheckboxes.forEach(checkbox => {
+      expect(checkbox).toBeChecked();
+    });
+    expect(screen.getByText('Showing 3 of 3 stocks • 3 selected')).toBeInTheDocument();
+
+    // Deselect all
+    fireEvent.click(headerCheckbox);
+    rowCheckboxes.forEach(checkbox => {
+      expect(checkbox).not.toBeChecked();
+    });
+    expect(screen.getByText('Showing 3 of 3 stocks')).toBeInTheDocument();
+  });
+
+  it('should apply selected styling to selected rows', () => {
+    const mockData = generateMockData(1);
+    render(<DataGrid data={mockData} />);
+
+    const checkbox = document.querySelector('.row input[type="checkbox"]') as HTMLInputElement;
+    const row = document.querySelector('.row');
+
+    // Initially not selected
+    expect(row).not.toHaveClass('selected');
+
+    // Select row
+    fireEvent.click(checkbox);
+    expect(row).toHaveClass('selected');
   });
 });

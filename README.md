@@ -8,6 +8,11 @@ A high-throughput financial data grid built with Preact, designed for displaying
 - **Real-time Updates**: Simulated live data updates every second
 - **Large Dataset Support**: Handles 1000+ rows efficiently
 - **Professional Styling**: Modern dark theme with gradient backgrounds and glowing effects
+- **Interactive Sorting**: Click column headers to sort data (ascending/descending/no sort)
+- **Search & Filtering**: Real-time symbol search with instant filtering
+- **Row Selection**: Individual and bulk row selection with visual feedback
+- **Column Resizing**: Drag resize handles to adjust column widths
+- **Column Reordering**: Drag and drop columns to rearrange the grid layout
 - **Responsive Design**: Adapts to different screen sizes with progressive column hiding
 - **Smooth Animations**: Subtle hover effects and loading animations
 - **Visual Indicators**: Up/down arrows (▲▼) for price change direction
@@ -59,22 +64,40 @@ Run tests with UI:
 npm run test:ui
 ```
 
-## Responsive Design
+## Interactive Features
 
-The data grid is fully responsive and adapts to different screen sizes:
+### Sorting
 
-- **Desktop (>1024px)**: All columns visible with full layout
-- **Tablet (768px-1024px)**: Market cap column hidden, smaller fonts
-- **Mobile (<768px)**: Volume and market cap columns hidden, horizontal scrolling enabled
-- **Small Mobile (<480px)**: Compact layout with minimal padding and smaller fonts
+- Click any column header to sort data
+- Three-state sorting: ascending → descending → no sort
+- Visual sort indicators show current sort state
+
+### Search & Filtering
+
+- Real-time search by stock symbol
+- Instant filtering as you type
+- Shows filtered count in the stats bar
+
+### Row Selection
+
+- Individual row selection with checkboxes
+- Select-all functionality in the header
+- Selected row count displayed in stats
+- Visual highlighting of selected rows
+
+### Column Management
+
+- **Resizing**: Drag the edge of column headers to resize
+- **Reordering**: Drag and drop column headers to rearrange
+- Responsive behavior maintains usability across devices
 
 ## Project Structure
 
 - `src/App.tsx` - Main application component
-- `src/components/DataGrid.tsx` - The data grid component
+- `src/components/DataGrid.tsx` - Interactive data grid component with sorting, filtering, and selection
 - `src/types.ts` - TypeScript interfaces and mock data generation
-- `src/app.css` - Styling for the grid
-- `src/test/` - Unit tests for components and utilities
+- `src/app.css` - Comprehensive styling for the grid and responsive design
+- `src/test/` - Comprehensive unit tests covering all features (sorting, filtering, selection, etc.)
 
 ## Technologies Used
 
@@ -87,7 +110,11 @@ The data grid is fully responsive and adapts to different screen sizes:
 
 ## Future Enhancements
 
-- Virtual scrolling for even larger datasets
-- Sorting and filtering capabilities
-- WebSocket integration for real data feeds
-- Advanced charting components
+- Virtual scrolling for handling 10,000+ rows efficiently
+- WebSocket integration for real-time market data feeds
+- Advanced filtering with multiple criteria (price ranges, volume thresholds)
+- Export functionality (CSV, PDF)
+- Column pinning and freezing
+- Advanced charting integration
+- Keyboard navigation and accessibility improvements
+- Data persistence and user preferences
